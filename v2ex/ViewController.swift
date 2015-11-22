@@ -10,12 +10,22 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var detailView: UIWebView!
+    @IBOutlet weak var detailLabel: UILabel!
     var Url:String?
+    var content:String?
     override func viewDidLoad() {
         super.viewDidLoad()
+        detailLabel.font = UIFont(name: "Helvetica Neue", size: 10)
+        detailLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        detailLabel.numberOfLines = 0
+        detailLabel.textAlignment = NSTextAlignment.Natural
+        detailLabel.layer.cornerRadius = 10
+        detailLabel.layer.borderWidth = 2
+        
+        
         // Do any additional setup after loading the view, typically from a nib.
-        articles(Url!)
+        //articles(Url!)
+        reloadContent(content!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -23,16 +33,18 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func articles(url:String){
+   
+    
+    func reloadContent(contents:String) {
+        let data = contents.dataUsingEncoding(NSUTF32StringEncoding, allowLossyConversion: false)
         
-        print("url \(url)")
+        let atext = try? NSAttributedString(data: data!, options: [NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType], documentAttributes: nil)
         
-        let Url:NSURL! = NSURL(string: url)
-        let request = NSURLRequest(URL: Url)
+        detailLabel.attributedText = atext
         
-        detailView.loadRequest(request)
+
         
-        
+        self.view.addSubview(detailLabel)
     }
 
 

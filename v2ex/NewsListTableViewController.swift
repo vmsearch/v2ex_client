@@ -10,7 +10,7 @@ import UIKit
 
 class NewsListTableViewController: UITableViewController {
 
-    let dataURL: NSURL! = NSURL(string: "https://www.v2ex.com/api/topics/hot.json")
+    let dataURL: NSURL! = NSURL(string: "https://www.v2ex.com/api/topics/latest.json")
     var topicList = [ArticleItems]()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,6 +116,7 @@ class NewsListTableViewController: UITableViewController {
             let webViewControll = segue.destinationViewController as? ViewController
             
             webViewControll?.Url = self.topicList[indexPtach!.row].url
+            webViewControll?.content = self.topicList[indexPtach!.row].content
             
         }
     }
